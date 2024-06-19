@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin: 10px 0;
+        }
+        .admin-block, .user-block {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="admin-block" sec:authorize="hasRole('ADMIN')">
+    <h2>This block is visible only to the administrator</h2>
+</div>
+<div class="user-block" sec:authorize="hasRole('USER')">
+    <h2>This block is visible only to a regular user</h2>
+</div>
+
+<label th:text="${user.getName()}"></label><br>
+<label th:text="${user.getPassword()}"></label>
+
+<div>
+    <form method="post" th:action="@{/logout}">
+        <input type="submit" value="Sign Out">
+    </form>
+</div>
+</body>
+</html>
